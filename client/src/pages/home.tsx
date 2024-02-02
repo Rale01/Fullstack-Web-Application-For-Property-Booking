@@ -24,7 +24,8 @@ const Home = () => {
 
 
     })
-
+//koristi se opcionalni operator ?. da bi se izbeglo pristupanje undefined vrednostima 
+//u objektu data. Ako data ne postoji, uzmemo prazan niz umesto undefined vrednosti.
     const latestProperties = data?.data ?? [];
 
     if(isLoading) return <Typography>Loading...</Typography>
@@ -81,8 +82,8 @@ const Home = () => {
                 >
                 <Typography fontSize="18px" fontWeight={600} color="#11142d"> Latest properties </Typography>
                 <Box mt={2.5} sx={{display: 'flex', flexWrap:'wrap', gap:4}}>
-                {latestProperties.map((property) => (
-
+                {latestProperties && latestProperties.length > 0 ? (
+                latestProperties.map((property) => (
                     <PropertyCard
                     key={property._id}
                     id={property._id}
@@ -91,7 +92,10 @@ const Home = () => {
                     price={property.price}
                     photo={property.photo}
                     />
-                ))}
+                ))
+                ) : (
+                <Typography>No properties available.</Typography>
+                )}
                 </Box>
 
             </Box>
